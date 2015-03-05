@@ -8,37 +8,37 @@
 var TimeEngine = require("time-engine");
 
 var Metronome = (function(super$0){var PRS$0 = (function(o,t){o["__proto__"]={"a":t};return o["a"]===t})({},{});var DP$0 = Object.defineProperty;var GOPD$0 = Object.getOwnPropertyDescriptor;var MIXIN$0 = function(t,s){for(var p in s){if(s.hasOwnProperty(p)){DP$0(t,p,GOPD$0(s,p));}}return t};var SP$0 = Object.setPrototypeOf||function(o,p){if(PRS$0){o["__proto__"]=p;}else {DP$0(o,"__proto__",{"value":p,"configurable":true,"enumerable":false,"writable":true});}return o};var OC$0 = Object.create;if(!PRS$0)MIXIN$0(Metronome, super$0);var proto$0={};
-  function Metronome() {var options = arguments[0];if(options === void 0)options = {};var audioContext = arguments[1];if(audioContext === void 0)audioContext = null;
-    super$0.call(this, audioContext);
+  function Metronome() {var period = arguments[0];if(period === void 0)period = 1;
+    super$0.call(this);
 
     /**
      * Metronome period in sec
      * @type {Number}
      */
-    this.period = options.period || 1;
+    this.period = period;
 
     /**
      * Metronome click frequency
      * @type {Number}
      */
-    this.clickFreq = options.clickFreq || 600;
+    this.clickFreq = 600;
 
     /**
      * Metronome click attack time
      * @type {Number}
      */
-    this.clickAttack = options.clickAttack || 0.002;
+    this.clickAttack = 0.002;
 
     /**
      * Metronome click release time
      * @type {Number}
      */
-    this.clickRelease = options.clickRelease || 0.098;
+    this.clickRelease = 0.098;
 
     this.__phase = 0;
 
-    this.__gainNode = super$0.audioContext.createGain();
-    this.__gainNode.gain.value = options.gain || 1;
+    this.__gainNode = this.audioContext.createGain();
+    this.__gainNode.gain.value = 1;
 
     this.outputNode = this.__gainNode;
   }if(super$0!==null)SP$0(Metronome,super$0);Metronome.prototype = OC$0(super$0!==null?super$0.prototype:null,{"constructor":{"value":Metronome,"configurable":true,"writable":true}, gain: {"get": $gain_get$0, "set": $gain_set$0, "configurable":true,"enumerable":true}, phase: {"get": $phase_get$0, "set": $phase_set$0, "configurable":true,"enumerable":true}});DP$0(Metronome,"prototype",{"configurable":false,"enumerable":false,"writable":false});
@@ -76,7 +76,7 @@ var Metronome = (function(super$0){var PRS$0 = (function(o,t){o["__proto__"]={"a
    * @param {Number} time metronome click synthesis audio time
    */
   proto$0.trigger = function(time) {
-    var audioContext = super$0.audioContext;
+    var audioContext = this.audioContext;
     var clickAttack = this.clickAttack;
     var clickRelease = this.clickRelease;
     var period = this.period;
